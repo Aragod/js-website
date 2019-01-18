@@ -8,6 +8,19 @@ var BudgetController = (function(){
 
 var UiController = (function(){
     
+    return {
+        
+        getInfos:function(){
+            
+            return{
+            type : document.getElementById('slct').value,
+            desc : document.getElementById('desc').value,
+            money: document.getElementById('floss').value
+                };
+        }
+        
+    };
+    
     
 })();
 
@@ -17,7 +30,8 @@ var controller = (function(one,two){
     
     var addItem = function(){
         
-        
+        var twacha = two.getInfos();
+        console.log(twacha);
       
         
         
