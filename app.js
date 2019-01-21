@@ -68,6 +68,30 @@ var UiController = (function () {
                 desc: document.getElementById('desc').value,
                 money: document.getElementById('floss').value
             };
+        },
+        
+        addlistItems:function(obj,type){
+            
+            var html , newHtml , div;
+            
+            if(type=='inc'){
+                
+                div = 'iii';
+                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div> </div></div>'
+            }
+            
+            else if (type=='exp'){
+                
+                div='eee'
+                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+            }
+            
+            newHtml = html.replace('%id%',obj.id);
+            newHtml = newHtml.replace('%descreption%',obj.description);
+            newHtml = newHtml.replace('%value%',obj.value);
+            
+            document.getElementById(div).insertAdjacentHTML('beforeend',newHtml);
+            
         }
 
     };
@@ -87,7 +111,7 @@ var controller = (function (one, two) {
         document.addEventListener('keypress', function (e) {
 
             if (e.keyCode == 13) {
-
+                 addItem();   
             }
 
         });
@@ -100,7 +124,7 @@ var controller = (function (one, two) {
 
         var twacha = two.getInfos();
         var newItem = BudgetController.addItem(twacha.type,twacha.desc,twacha.money);
-
+        two.addlistItems(newItem,twacha.type);
 
     }
 
