@@ -100,6 +100,9 @@ var BudgetController = (function () {
 
 
 
+//-------------------------------------------------------------------------
+
+
 var UiController = (function () {
 
     return {
@@ -140,15 +143,27 @@ var UiController = (function () {
             document.getElementById('desc').value = '';
             document.getElementById('floss').value = '';
 
+        },
+        
+        displayThaShit : function(obj){
+            
+            document.getElementById('wholeBudget').textContent = obj.budget;
+            document.getElementById('income').textContent = obj.totalInc;
+            document.getElementById('expenses').textContent = obj.totalExp;
+            document.getElementById('per').textContent = obj.pourcentage + '%';
+            
+            
         }
 
     };
 
-
+    
 
 
 })();
 
+
+//-------------------------------------------------------------------------
 
 
 var controller = (function (one, two) {
@@ -171,6 +186,7 @@ var controller = (function (one, two) {
     var updateBudget = function(){
         one.calculateBudget();
         var ThaWholeShit = one.getbudget();
+        two.displayThaShit(ThaWholeShit);
         
         
         
@@ -183,12 +199,13 @@ var controller = (function (one, two) {
         var twacha = two.getInfos();
         
         if(twacha.desc !='' && twacha.money !=''){
-        var newItem = BudgetController.addItem(twacha.type, twacha.desc, twacha.money);
+        var newItem = one.addItem(twacha.type, twacha.desc, twacha.money);
         two.addlistItems(newItem, twacha.type);
         two.clearThaShit();
         }
        
         updateBudget();
+        
 
     }
 
