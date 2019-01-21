@@ -130,9 +130,13 @@ var controller = (function (one, two) {
     var addItem = function () {
 
         var twacha = two.getInfos();
+        
+        if(twacha.desc !='' && twacha.money !=''){
         var newItem = BudgetController.addItem(twacha.type, twacha.desc, twacha.money);
         two.addlistItems(newItem, twacha.type);
         two.clearThaShit();
+        }
+       
 
     }
 
