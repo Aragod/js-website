@@ -51,8 +51,12 @@ var BudgetController = (function () {
         addItem: function (type, desc, val) {
 
             var newItem, id;
-
-            id = 0;
+            
+            if (data.allItems[type].length > 0) {
+                id = data.allItems[type][data.allItems[type].length - 1].id + 1;
+            } else {
+                id = 0;
+            }
 
             if (type == 'inc')
                 newItem = new Income(id, desc, val);
@@ -123,11 +127,11 @@ var UiController = (function () {
             if (type == 'inc') {
 
                 div = 'iii';
-                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div> </div></div>'
+                html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div> </div></div>'
             } else if (type == 'exp') {
 
                 div = 'eee'
-                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             }
 
             newHtml = html.replace('%id%', obj.id);
@@ -180,6 +184,8 @@ var controller = (function (one, two) {
             }
 
         });
+        
+        document.getElementById('bigOne').addEventListener('click',deleteThaShit);
 
     };
     
@@ -209,7 +215,20 @@ var controller = (function (one, two) {
 
     }
 
-
+    var deleteThaShit = function(event) {
+      var itemId , splitId , type , id ;
+        
+        itemId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        
+        splitId = itemId.split('-');
+        type = splitId[0];
+        id = splitId[1];
+       
+        console.log(type + '   ' + id);
+        
+        
+        
+    };
 
 
     return {
@@ -218,7 +237,7 @@ var controller = (function (one, two) {
             setupEventListeners();
 
         }
-    }
+    };
 
 
 
