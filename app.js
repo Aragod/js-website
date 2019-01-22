@@ -129,7 +129,7 @@ var UiController = (function () {
             return {
                 type: document.getElementById('slct').value,
                 desc: document.getElementById('desc').value,
-                money: document.getElementById('floss').value
+                money:document.getElementById('floss').value
             };
         },
 
@@ -140,11 +140,11 @@ var UiController = (function () {
             if (type == 'inc') {
 
                 div = 'iii';
-                html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div> </div></div>'
+                html = '<div class="item clearfix" id="inc-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">+%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div> </div></div>'
             } else if (type == 'exp') {
 
                 div = 'eee'
-                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="exp-%id%"><div class="item__description">%descreption%</div><div class="right clearfix"><div class="item__value">-%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             }
 
             newHtml = html.replace('%id%', obj.id);
@@ -167,6 +167,23 @@ var UiController = (function () {
             document.getElementById('desc').value = '';
             document.getElementById('floss').value = '';
 
+        },
+        
+        changeColor:function(){
+            
+            var dct = document.getElementById('slct');
+            dct.addEventListener('change',function(){
+              
+            
+                document.getElementById('desc').classList.toggle('red-focus');
+                document.getElementById('floss').classList.toggle('red-focus');
+                dct.classList.toggle('red-focus');
+                document.getElementById('valider').classList.toggle('red');
+                
+               
+              
+          });
+            
         },
         
         displayTime: function(){
@@ -195,17 +212,29 @@ var UiController = (function () {
             }
             
             
-            document.getElementById('time').textContent =' (' +  mt + ')';
+            document.getElementById('time').textContent =' (' +  mt + ' / ' + dd.getFullYear() + ')';
             
             
         },
         
         displayThaShit : function(obj){
+            if(obj.budget>0)
+            document.getElementById('wholeBudget').textContent ='+' + obj.budget;
+            else
+             document.getElementById('wholeBudget').textContent =obj.budget;   
+            if(obj.totalInc>0)
+            document.getElementById('income').textContent ='+' + obj.totalInc;
+            else
+             document.getElementById('income').textContent =obj.totalInc;   
+            if(obj.totalExp>0)
+            document.getElementById('expenses').textContent = '-' + obj.totalExp;
+            else
+             document.getElementById('expenses').textContent =obj.totalExp;  
             
-            document.getElementById('wholeBudget').textContent = obj.budget;
-            document.getElementById('income').textContent = obj.totalInc;
-            document.getElementById('expenses').textContent = obj.totalExp;
+            if(obj.totalExp>0 && obj.totalInc>0)
             document.getElementById('per').textContent = obj.pourcentage + '%';
+            else
+            document.getElementById('per').textContent = 0;
             
             
         }
@@ -265,6 +294,7 @@ var controller = (function (one, two) {
         var newItem = one.addItem(twacha.type, twacha.desc, twacha.money);
         two.addlistItems(newItem, twacha.type);
         two.clearThaShit();
+        document.getElementById('desc').focus(); 
         }
        
         updateBudget();
@@ -305,3 +335,4 @@ var controller = (function (one, two) {
 
 controller.init();
 UiController.displayTime();
+UiController.changeColor();
