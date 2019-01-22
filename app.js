@@ -67,6 +67,19 @@ var BudgetController = (function () {
             return newItem;
         },
         
+        deleteItem: function(type,id) {
+            
+            for(var i = 0 ; i<data.allItems[type].length;i++){
+                
+                if (data.allItems[type][i].id === id){
+                    
+                    data.allItems[type].splice(i,1);
+                    
+                }
+                
+            }
+        },
+        
       
           calculateBudget : function(){
             
@@ -141,12 +154,50 @@ var UiController = (function () {
             document.getElementById(div).insertAdjacentHTML('beforeend', newHtml);
 
         },
+        
+        removeThaShitFromUi : function(idUi){
+             var twichiyia = document.getElementById(idUi);
+             twichiyia.parentNode.removeChild(twichiyia);
+            
+            
+        },
 
         clearThaShit: function () {
 
             document.getElementById('desc').value = '';
             document.getElementById('floss').value = '';
 
+        },
+        
+        displayTime: function(){
+            
+            var dd = new Date();
+            var mm = dd.getMonth() + 1;
+            var mt;
+            
+            
+            
+            switch(mm){
+                case 1 : mt = 'January'; break;  
+                case 2 : mt = 'February';break; 
+                case 3 : mt = 'March';break; 
+                case 4 : mt = 'April';break; 
+                case 5 : mt = 'May';break; 
+                case 6 : mt = 'june';break; 
+                case 7 : mt = 'july';break; 
+                case 8 : mt = 'August';break; 
+                case 9 : mt = 'September';break; 
+                case 10: mt = 'october';break; 
+                case 11: mt = 'November';break; 
+                case 12: mt = 'December';break; 
+                default:mt='error';
+                    
+            }
+            
+            
+            document.getElementById('time').textContent =' (' +  mt + ')';
+            
+            
         },
         
         displayThaShit : function(obj){
@@ -158,9 +209,15 @@ var UiController = (function () {
             
             
         }
+        
+    
+        
+        
 
     };
 
+    
+    
     
 
 
@@ -222,10 +279,12 @@ var controller = (function (one, two) {
         
         splitId = itemId.split('-');
         type = splitId[0];
-        id = splitId[1];
+        id = parseInt(splitId[1]);
        
-        console.log(type + '   ' + id);
         
+        one.deleteItem(type,id);
+        two.removeThaShitFromUi(itemId);
+        updateBudget();
         
         
     };
@@ -245,3 +304,4 @@ var controller = (function (one, two) {
 })(BudgetController, UiController);
 
 controller.init();
+UiController.displayTime();
